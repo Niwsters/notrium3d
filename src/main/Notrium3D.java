@@ -29,6 +29,7 @@ public class Notrium3D extends SimpleBulletApplication {
 		player = new PlayerActor(this);
 		player.setController(playerController);
 		rootNode.attachChild(player);
+		getPhysicsSpace().add(player);
 	}
 	
 	public void simpleUpdate(float tpf) {
