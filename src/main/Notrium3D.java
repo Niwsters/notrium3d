@@ -4,15 +4,11 @@ import world.WorldGenerator;
 
 import com.jme3.app.SimpleBulletApplication;
 
-import controller.PlayerController;
-
-import entity.actor.PlayerActor;
-
 public class Notrium3D extends SimpleBulletApplication {
 	
-	private PlayerController playerController;
+	private ActorHandler actorHandler;
 	private KeyInputHandler keyInputHandler;
-	private PlayerActor player;
+	private WorldGenerator worldGenerator;
 	
 	public Notrium3D() {
 		super();
@@ -21,19 +17,18 @@ public class Notrium3D extends SimpleBulletApplication {
 	public void simpleInitApp() {
 		keyInputHandler = new KeyInputHandler(this);
 		keyInputHandler.initKeys();
-		playerController = new PlayerController(this);
 		
-		WorldGenerator wg = new WorldGenerator(this);
-		wg.initWorld();
+		//Initialize the terrain
+		worldGenerator = new WorldGenerator(this);
+		worldGenerator.initWorld();
 		
-		player = new PlayerActor(this);
-		player.setController(playerController);
-		rootNode.attachChild(player);
-		getPhysicsSpace().add(player);
+		//Setup all the starting actors
+		actorHandler = new ActorHandler(this);
+		actorHandler.setupActors();
 	}
 	
 	public void simpleUpdate(float tpf) {
-		playerController.update();
+		actorHandler.update();
 	}
 	
 	public static void main(String[] args) {
@@ -41,7 +36,11 @@ public class Notrium3D extends SimpleBulletApplication {
 		app.start();
 	}
 	
-	public PlayerController getPlayerController() {
-		return playerController;
+	public KeyInputHandler getKeyInputHandler() {
+		return keyInputHandler;
+	}
+	
+	public ActorHandler getActorHandler() {
+		return actorHandler;
 	}
 }

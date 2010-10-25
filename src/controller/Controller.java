@@ -1,35 +1,22 @@
 package controller;
 
-import com.jme3.math.Quaternion;
-import com.jme3.math.Vector3f;
-
-import entity.Entity;
+import main.Notrium3D;
+import actor.Actor;
 
 public class Controller {
 	
-	protected Entity entity;
-	protected Quaternion rotation;
-	protected Vector3f location;
-	protected boolean XZAxisLock;
+	protected Actor actor;
+	protected Notrium3D game;
 	
-	public Controller() {
-	}
-	
-	public void setEntity(Entity entity) {
-		this.entity = entity;
-	}
-	
-	public void lockXZAxis() {
-		if(XZAxisLock) {
-			if(entity.getLocalRotation().getX() != 0 ||
-					entity.getLocalRotation().getZ() != 0) {
-				
-				entity.rotateUpTo(new Vector3f(180f, entity.getLocalRotation().getY(), 180f));
-			}
-		}
+	public Controller(Notrium3D game, Actor actor) {
+		this.game = game;
+		this.actor = actor;
 	}
 	
 	public void update() {
-		lockXZAxis();
+	}
+
+	public void setActor(Actor actor) {
+		this.actor = actor;
 	}
 }

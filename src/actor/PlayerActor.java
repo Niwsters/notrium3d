@@ -1,4 +1,4 @@
-package entity.actor;
+package actor;
 
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.material.Material;
@@ -14,10 +14,17 @@ public class PlayerActor extends Actor {
 	private Box box;
 	private Geometry box_geo;
 	private Material mat;
+	private Notrium3D game;
 
 	public PlayerActor(Notrium3D game) {
 		super(game);
+		this.game = game;
 		
+		setupBox();
+	}
+	
+	//ONLY for testing purposes
+	private void setupBox() {
 		box = new Box(Vector3f.ZERO, 1, 1, 1);
 		box_geo = new Geometry("Player", box);
 		mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/SolidColor.j3md");
