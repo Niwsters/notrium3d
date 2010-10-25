@@ -1,42 +1,43 @@
 package controller;
 
+import actor.Actor;
 import main.Notrium3D;
 
 public class PlayerController extends Controller {
 	
-	private Notrium3D game;
-	
-	public PlayerController(Notrium3D game) {
-		this.game = game;
-		
-		XZAxisLock = true;
-	}
-	
-	public void rotateYaw() {
-		entity.rotate(0.1f, 0, 0);
-	}
-	
-	public void rotatePitch(float value) {
-		game.getCamera().setRotation(rotation);
-	}
-	
-	public void rotateRollLeft(float value) {
-		entity.rotate(0, 1f*value, 0);
-	}
-	
-	public void rotateRollRight(float value) {
-		entity.rotate(0, -1f*value, 0);
-	}
-	
-	public void moveForward() {
+	public PlayerController(Notrium3D game, Actor actor) {
+		super(game, actor);
 	}
 	
 	public void update() {
+		updateActor();
+		updateCamera();
+	}
+	
+	public void updateActor() {
+		actor.getWalkDirection().set(0, 0, 0);
 		
-		location = entity.getLocalTranslation();
-		rotation = entity.getLocalRotation();
+		if(game.getKeyInputHandler().StrafeLeft) {
+			actor.getWalkDirection().addLocal(game.getCamera().getLeft().mult(0.1f));
+		}
+		if(game.getKeyInputHandler().StrafeRight) {
+			actor.getWalkDirection().addLocal(game.getCamera().getLeft().mult(0.1f).negate());
+		}
+		if(game.getKeyInputHandler().Forward) {
+			actor.getWalkDirection().addLocal(game.getCamera().getDirection().mult(0.1f));
+		}
+		if(game.getKeyInputHandler().Backward) {
+			actor.getWalkDirection().addLocal(game.getCamera().getDirection().mult(0.1f).negate());
+		}
 		
-		game.getCamera().setRotation(rotation);
-		game.getCamera().setLocation(location);
+		actor.update();
+	}
+	
+	public void updateCamera() {
+		game.getCamera().setLocation(actor.getLocalTranslation());
+	}
+	
+	public Actor getActor() {
+		return actor;
 	}
 }

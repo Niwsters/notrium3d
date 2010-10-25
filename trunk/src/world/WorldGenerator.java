@@ -37,10 +37,11 @@ public class WorldGenerator{
 		
 		floorNode = new PhysicsNode(
 				floor_geo,
-				new BoxCollisionShape(new Vector3f(10f, 0.1f, 5f)),
+				new BoxCollisionShape(new Vector3f(10f, 1f, 5f)),
 				0);
+		floorNode.setFriction(0.1f);
 		
-		floorNode.setLocalTranslation(new Vector3f(0, 0.1f, 0));
+		floorNode.setLocalTranslation(new Vector3f(0, -6f, 0));
 		
 		game.getRootNode().attachChild(floorNode);
 		game.getPhysicsSpace().add(floorNode);
