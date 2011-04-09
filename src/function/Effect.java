@@ -1,9 +1,6 @@
 package function;
 
-import item.Item;
 import main.Notrium3D;
-
-import com.jme3.scene.Node;
 
 public class Effect {
 	

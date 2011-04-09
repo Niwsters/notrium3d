@@ -14,7 +14,7 @@ public class PlayerController extends Controller {
 		updateCamera();
 	}
 	
-	public void updateActor() {
+	private void updateActor() {
 		actor.getWalkDirection().set(0, 0, 0);
 		
 		if(game.getKeyInputHandler().StrafeLeft) {
@@ -30,10 +30,18 @@ public class PlayerController extends Controller {
 			actor.getWalkDirection().addLocal(game.getCamera().getDirection().mult(0.1f).negate());
 		}
 		
+		if(game.getKeyInputHandler().PickUpItem) {
+			pickUpItem();
+		}
+		if(game.getKeyInputHandler().ActivateItem) {
+			actor.getInventory().getItemsList().get(0).executeFunction("Light");
+			System.out.println("Activating light...");
+		}
+		
 		actor.update();
 	}
 	
-	public void updateCamera() {
+	private void updateCamera() {
 		game.getCamera().setLocation(actor.getLocalTranslation());
 	}
 	

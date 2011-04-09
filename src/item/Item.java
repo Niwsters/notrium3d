@@ -1,32 +1,76 @@
 package item;
 
+import inventory.Inventory;
+
+import java.util.ArrayList;
+
+import com.jme3.scene.Node;
+
+import function.Function;
+
 import main.Notrium3D;
 
-import com.jme3.bullet.collision.shapes.SphereCollisionShape;
-import com.jme3.bullet.nodes.PhysicsNode;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
-
-public class Item extends PhysicsNode {
+public class Item extends Node {
 	
-	private Notrium3D game;
+	protected ArrayList<Function> functions;
+	protected boolean equippable = false;
+	protected Notrium3D game;
+	protected String name = "";
 	
 	public Item(Notrium3D game) {
-		super(new SphereCollisionShape(1f));
-		
 		this.game = game;
+		functions = new ArrayList<Function>();
 	}
 	
-	public void makeBox() {
-		Box box = new Box(Vector3f.ZERO, 1, 1, 1);
-		Geometry box_geo = new Geometry("Item", box);
-		Material mat = new Material(game.getAssetManager(),
-		"Common/MatDefs/Misc/SolidColor.j3md");
-		mat.setColor("m_Color", ColorRGBA.Blue);
-		box_geo.setMaterial(mat);
-		attachChild(box_geo);
+	public void addFunction(Function f) {
+		functions.add(f);
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setEquippable(boolean equippable) {
+		this.equippable = equippable;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public ArrayList<Function> getFunctionList() {
+		return functions;
+	}
+	
+	public InventoryItem toInventoryItem(Inventory inventory) {
+		InventoryItem i = new InventoryItem(game, inventory);
+		
+		i.setName(name);
+		i.setEquippable(equippable);
+		for(Function f: functions) {
+			i.addFunction(f);
+		}
+		
+		return i;
+	}
+	
+	public WorldItem toWorldItem() {
+		WorldItem i = new WorldItem(game);
+		
+		i.setName(name);
+		i.setEquippable(equippable);
+		for(Function f: functions) {
+			i.addFunction(f);
+		}
+		
+		return i;
+	}
+	
+	public void executeFunction(String nameOfFunction) {
+		for(Function f: functions) {
+			if(f.getName().equals(nameOfFunction)) {
+				f.execute();
+			}
+		}
 	}
 }

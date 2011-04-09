@@ -1,6 +1,5 @@
 package actor;
 
-import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -26,11 +25,10 @@ public class PlayerActor extends Actor {
 	//ONLY for testing purposes
 	private void setupBox() {
 		box = new Box(Vector3f.ZERO, 1, 1, 1);
-		box_geo = new Geometry("Player", box);
+		box_geo = new Geometry("player_box", box);
 		mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/SolidColor.j3md");
 		mat.setColor("m_Color", ColorRGBA.Blue);
 		box_geo.setMaterial(mat);
-		setCollisionShape(new BoxCollisionShape(new Vector3f(1, 1, 1)));
 		
 		attachChild(box_geo);
 		setLocalTranslation(new Vector3f(0, 0.1f, 0));

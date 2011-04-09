@@ -1,7 +1,7 @@
-package main;
+package actor;
 
+import main.Notrium3D;
 import controller.PlayerController;
-import actor.Actor;
 
 public class ActorHandler {
 	
@@ -18,7 +18,6 @@ public class ActorHandler {
 		playerController = new PlayerController(game, player);
 		
 		game.getRootNode().attachChild(player);
-		game.getPhysicsSpace().add(player);
 	}
 	
 	public void update() {

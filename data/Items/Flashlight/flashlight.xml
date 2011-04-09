@@ -1,0 +1,16 @@
+<item>
+  <name>Flashlight</name>
+  <equippable>Yes</equippable>
+  <function>
+    <nameoffunction>Light</nameoffunction>
+    <key>F</key>
+
+    <conditions>
+    </conditions>
+    <effects>
+      <effect>
+        <type>light</type>
+      </effect>
+    </effects>
+  </function>
+</item>

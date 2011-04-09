@@ -1,12 +1,20 @@
 package main;
 
+import item.ItemHandler;
+import item.WorldItem;
 import world.WorldGenerator;
 
-import com.jme3.app.SimpleBulletApplication;
+import actor.ActorHandler;
 
-public class Notrium3D extends SimpleBulletApplication {
+import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.BulletAppState;
+
+public class Notrium3D extends SimpleApplication {
+	
+	private BulletAppState bulletAppState;
 	
 	private ActorHandler actorHandler;
+	private ItemHandler itemHandler;
 	private KeyInputHandler keyInputHandler;
 	private WorldGenerator worldGenerator;
 	
@@ -15,16 +23,24 @@ public class Notrium3D extends SimpleBulletApplication {
 	}
 	
 	public void simpleInitApp() {
+		bulletAppState = new BulletAppState();
+		stateManager.attach(bulletAppState);
+		
 		keyInputHandler = new KeyInputHandler(this);
 		keyInputHandler.initKeys();
 		
-		//Initialize the terrain
 		worldGenerator = new WorldGenerator(this);
 		worldGenerator.initWorld();
 		
-		//Setup all the starting actors
 		actorHandler = new ActorHandler(this);
 		actorHandler.setupActors();
+		
+		itemHandler = new ItemHandler(this);
+		itemHandler.init();
+		
+		WorldItem item = itemHandler.getAbstractItem("Flashlight").toWorldItem();
+		item.makeBox();
+		itemHandler.addWorldItem(item);
 	}
 	
 	public void simpleUpdate(float tpf) {
@@ -42,5 +58,13 @@ public class Notrium3D extends SimpleBulletApplication {
 	
 	public ActorHandler getActorHandler() {
 		return actorHandler;
+	}
+	
+	public ItemHandler getItemHandler() {
+		return itemHandler;
+	}
+	
+	public BulletAppState getBulletAppState() {
+		return bulletAppState;
 	}
 }

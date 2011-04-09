@@ -1,7 +1,5 @@
 package function;
 
-import item.InventoryItem;
-import item.Item;
 import main.Notrium3D;
 
 import com.jme3.light.DirectionalLight;
