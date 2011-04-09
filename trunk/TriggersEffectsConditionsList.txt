@@ -1,0 +1,9 @@
+Triggers list:
+- Enter area
+- Pick up item
+- Destroy object
+- Kill creature
+- Use object
+- Near creature
+- Walk
+- Temperature change

@@ -1,0 +1,14 @@
+Name: Flashlight
+Equippable: Yes
+
+Functions:
+  Function 1:
+    Key: F
+    Conditions:
+      Battery: 1
+    End Conditions
+    Effects:
+      Light
+    End Effects
+  End Function
+End Functions

@@ -10,10 +10,10 @@ import com.jme3.input.controls.MouseAxisTrigger;
 public class KeyInputHandler {
 	
 	public boolean Forward, Backward, StrafeLeft, StrafeRight,
-	TurnLeft, TurnRight = false;
+	TurnLeft, TurnRight, PickUpItem, ActivateItem = false;
 	
 	//Arrays to store all the commands, NOT the keys themselves, which the keys will trigger
-	private String[] analogMapping = {"TurnLeft", "TurnRight"};
+	private String[] analogMapping = {"TurnLeft", "TurnRight", "PickUpItem", "ActivateItem"};
 	private String[] actionMapping = {"Forward", "Backward", "StrafeLeft", "StrafeRight"};
 	private Notrium3D game;
 	
@@ -29,13 +29,21 @@ public class KeyInputHandler {
 		game.getInputManager().addListener(actionListener, actionMapping);
 	}
 	
-	//This is for continuous key listening, think "isPressed"
     public AnalogListener analogListener = new AnalogListener() {
 		public void onAnalog(String name, float value, float tpf) {
+			if(name.equals("PickUpItem")) {
+				PickUpItem = true;
+			} else {
+				PickUpItem = false;
+			}
+			if(name.equals("ActivateItem")) {
+				ActivateItem = true;
+			} else {
+				ActivateItem = false;
+			}
 		}
     };
     
-    //This is for one-time press
     public ActionListener actionListener = new ActionListener() {
 		public void onAction(String name, boolean value, float tpf) {
 			if(name.equals("StrafeLeft")) {
@@ -69,6 +77,11 @@ public class KeyInputHandler {
 		}
     };
     
+    //TODO: Finish this. It's supposed to make us able to add keys from outside classes.
+    public void addInput(boolean analog, String command, int key) {
+    	game.getInputManager().addMapping(command, new KeyTrigger(key));
+    }
+    
     //Initialize the mapping for all keys
     private void initMapping() {
     	game.getInputManager().addMapping("Forward", new KeyTrigger(KeyInput.KEY_U));
@@ -80,5 +93,8 @@ public class KeyInputHandler {
     	game.getInputManager().addMapping("TurnRight", new MouseAxisTrigger(MouseInput.AXIS_X, false));
     	game.getInputManager().addMapping("YawRotateUp", new MouseAxisTrigger(MouseInput.AXIS_Y, true));
     	game.getInputManager().addMapping("YawRotateDown", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
+    	
+    	game.getInputManager().addMapping("PickUpItem", new KeyTrigger(KeyInput.KEY_Y));
+    	game.getInputManager().addMapping("ActivateItem", new KeyTrigger(KeyInput.KEY_E));
     }
 }
