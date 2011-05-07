@@ -15,4 +15,10 @@ public class InventoryState extends AbstractAppState {
 		
 	}
 	
+	@Override
+	public void update(float tpf)
+	{
+		super.update(tpf);
+
+	}
 }

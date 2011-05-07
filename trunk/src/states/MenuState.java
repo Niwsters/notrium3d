@@ -35,13 +35,25 @@ public class MenuState extends AbstractAppState {
 		
 	}
 	
+	public void up()
+	{
+		selUp = true;
+	}
+	
+	public void down()
+	{
+		selDown = true;
+	}	
+	
 	public void update(float tpf)
 	{
 		
-	}
-
-	public void render(RenderManager rm)
-	{
-		//Must render previously mentioned graphics here.
+		if (selUp && sel > 0)
+			sel--;
+		if (selDown && sel < 3)
+			sel++;
+		
+		selUp = false;
+		selDown = false;
 	}
 }
