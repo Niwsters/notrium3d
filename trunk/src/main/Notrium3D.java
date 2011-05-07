@@ -1,23 +1,20 @@
 package main;
 
 import com.jme3.app.SimpleApplication;
-
-import item.ItemHandler;
-import item.WorldItem;
-
-import world.WorldGenerator;
 import com.jme3.app.state.*;
-import com.jme3.app.state.AppStateManager;
 import com.jme3.bullet.BulletAppState;
+
+import states.MenuState;
 
 import actor.ActorHandler;
-
-import com.jme3.app.SimpleApplication;
-import com.jme3.bullet.BulletAppState;
+import world.WorldGenerator;
+import item.ItemHandler;
+import item.WorldItem;
 
 public class Notrium3D extends SimpleApplication {
 	
 	private BulletAppState bulletAppState;
+	private MenuState menu;
 	
 	private ActorHandler actorHandler;
 	private ItemHandler itemHandler;
@@ -30,8 +27,13 @@ public class Notrium3D extends SimpleApplication {
 	}
 	
 	public void simpleInitApp() {
+		stateManager = this.getStateManager();
+		
 		bulletAppState = new BulletAppState();
 		stateManager.attach(bulletAppState);
+		
+		menu = new MenuState();
+		stateManager.attach(menu);
 		
 		keyInputHandler = new KeyInputHandler(this);
 		keyInputHandler.initKeys();
@@ -70,11 +72,11 @@ public class Notrium3D extends SimpleApplication {
 		return actorHandler;
 	}
 	
-	public ItemHandler getItemHandler() {
+	public ItemHandler getItemHandler(){
 		return itemHandler;
 	}
 	
-	public BulletAppState getBulletAppState() {
+	public BulletAppState getBulletAppState(){
 		return bulletAppState;
 	}
 }
