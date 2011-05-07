@@ -16,8 +16,23 @@ import com.jme3.input.controls.MouseButtonTrigger;
 
 public class MenuState extends AbstractAppState {
 	
+	//Must declare graphics for the menu here.
+	
+	private int sel;
+	private boolean selUp;
+	private boolean selDown;
+	
 	public MenuState()
 	{
+		sel = 0;
+		selUp = false;
+		selDown = false;
+	}
+	
+	@Override
+	public void initialize(AppStateManager asm, Application app)
+	{
+		
 	}
 	
 	public void update(float tpf)
@@ -25,5 +40,8 @@ public class MenuState extends AbstractAppState {
 		
 	}
 
-	
+	public void render(RenderManager rm)
+	{
+		//Must render previously mentioned graphics here.
+	}
 }
