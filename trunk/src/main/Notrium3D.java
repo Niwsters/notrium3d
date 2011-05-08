@@ -8,6 +8,7 @@ import states.MenuState;
 
 import actor.ActorHandler;
 import world.WorldGenerator;
+import input.KeyInputHandler;
 import item.ItemHandler;
 import item.WorldItem;
 
