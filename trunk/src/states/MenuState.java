@@ -1,39 +1,23 @@
 package states;
 
-import com.jme3.app.Application;
+import main.Notrium3D;
+
 import com.jme3.app.state.AbstractAppState;
-import com.jme3.niftygui.NiftyJmeDisplay;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 
-import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.screen.Screen;
-import de.lessvoid.nifty.screen.ScreenController;
-
-public class MenuState extends AbstractAppState implements ScreenController {
+public class MenuState extends AbstractAppState{
 	
-	Nifty nifty;
-	NiftyJmeDisplay niftyDisplay;
+	BitmapFont hudFont;
+	BitmapText hudText;
 	
-	public MenuState(Application app) {
-		niftyDisplay = new NiftyJmeDisplay(
-				app.getAssetManager(),
-				app.getInputManager(),
-				app.getAudioRenderer(),
-				app.getGuiViewPort());
+	public MenuState(Notrium3D app) {
+		hudFont = app.getAssetManager().loadFont("Interface/Fonts/Default.fnt");
 		
-		nifty = niftyDisplay.getNifty();
-		
-		nifty.fromXml("states/MainMenu.xml", "start", this);
-		
-		app.getGuiViewPort().addProcessor(niftyDisplay);
-	}
-	
-	public void bind(Nifty nifty, Screen screen) {
-	}
-	
-	public void onEndScreen() {
-	}
-	
-	public void onStartScreen() {
+		hudText = new BitmapText(hudFont, false);
+		hudText.setText("START");
+		hudText.setLocalTranslation(300, hudText.getLineHeight(), 0);
+		app.getGUINode().attachChild(hudText);
 	}
 	
 	public void update(float tpf) {
