@@ -37,14 +37,17 @@ public class MenuState extends AbstractAppState {
 	@Override
 	public void initialize(AppStateManager asm, Application app)
 	{
-		BitmapFont font = app.getAssetManager().loadFont("data/Interface/Fonts/Console.fnt");
+		//Problems here.
+		BitmapFont font = app.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
 		
 		BitmapText hudText = new BitmapText(font, false);
 		hudText.setSize(font.getCharSet().getRenderedSize());      	// font size
 		hudText.setColor(ColorRGBA.Blue);                             // font color
 		hudText.setText("HERE'S A TEST STRING!"); 	 	 	          // the text
 		hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
-		guiNode.attachChild(hudText);	
+		
+		guiNode = new Node("Menu GUI Node");
+		guiNode.attachChild(hudText);
 	
 		((SimpleApplication)app).getGuiNode().attachChild(guiNode);
 	}

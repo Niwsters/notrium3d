@@ -32,8 +32,8 @@ public class Notrium3D extends SimpleApplication {
 		bulletAppState = new BulletAppState();
 		stateManager.attach(bulletAppState);
 		
-		menu = new MenuState();
-		stateManager.attach(menu);
+		//menu = new MenuState();
+		//stateManager.attach(menu);
 		
 		keyInputHandler = new KeyInputHandler(this);
 		keyInputHandler.initKeys();
