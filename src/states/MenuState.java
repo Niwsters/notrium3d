@@ -1,76 +1,41 @@
 package states;
 
 import com.jme3.app.Application;
-import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.AbstractAppState;
-import com.jme3.app.state.AppState;
-import com.jme3.app.state.AppStateManager;
-import com.jme3.renderer.RenderManager;
-import com.jme3.scene.Node;
+import com.jme3.niftygui.NiftyJmeDisplay;
 
-import com.jme3.font.BitmapFont;
-import com.jme3.font.BitmapText;
-import com.jme3.input.InputManager;
-import com.jme3.input.KeyInput;
-import com.jme3.input.MouseInput;
-import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.AnalogListener;
-import com.jme3.input.controls.KeyTrigger;
-import com.jme3.input.controls.MouseButtonTrigger;
-import com.jme3.math.ColorRGBA;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.screen.Screen;
+import de.lessvoid.nifty.screen.ScreenController;
 
-public class MenuState extends AbstractAppState {
+public class MenuState extends AbstractAppState implements ScreenController {
 	
-	private Node guiNode; //Must declare graphics for the menu here.
+	Nifty nifty;
+	NiftyJmeDisplay niftyDisplay;
 	
-	private int sel;
-	private boolean selUp;
-	private boolean selDown;
-	
-	public MenuState()
-	{
-		sel = 0;
-		selUp = false;
-		selDown = false;
+	public MenuState(Application app) {
+		niftyDisplay = new NiftyJmeDisplay(
+				app.getAssetManager(),
+				app.getInputManager(),
+				app.getAudioRenderer(),
+				app.getGuiViewPort());
+		
+		nifty = niftyDisplay.getNifty();
+		
+		nifty.fromXml("states/MainMenu.xml", "start", this);
+		
+		app.getGuiViewPort().addProcessor(niftyDisplay);
 	}
 	
-	@Override
-	public void initialize(AppStateManager asm, Application app)
-	{
-		//Problems here.
-		BitmapFont font = app.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
-		
-		BitmapText hudText = new BitmapText(font, false);
-		hudText.setSize(font.getCharSet().getRenderedSize());      	// font size
-		hudText.setColor(ColorRGBA.Blue);                             // font color
-		hudText.setText("HERE'S A TEST STRING!"); 	 	 	          // the text
-		hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
-		
-		guiNode = new Node("Menu GUI Node");
-		guiNode.attachChild(hudText);
-	
-		((SimpleApplication)app).getGuiNode().attachChild(guiNode);
+	public void bind(Nifty nifty, Screen screen) {
 	}
 	
-	public void up()
-	{
-		selUp = true;
+	public void onEndScreen() {
 	}
 	
-	public void down()
-	{
-		selDown = true;
-	}	
+	public void onStartScreen() {
+	}
 	
-	public void update(float tpf)
-	{
-		
-		if (selUp && sel > 0)
-			sel--;
-		if (selDown && sel < 3)
-			sel++;
-		
-		selUp = false;
-		selDown = false;
+	public void update(float tpf) {
 	}
 }
