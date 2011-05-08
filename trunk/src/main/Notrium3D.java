@@ -1,83 +1,31 @@
 package main;
 
-import com.jme3.app.SimpleApplication;
-import com.jme3.app.state.*;
-import com.jme3.bullet.BulletAppState;
-
 import states.MenuState;
 
-import actor.ActorHandler;
-import world.WorldGenerator;
-import input.KeyInputHandler;
-import item.ItemHandler;
-import item.WorldItem;
+import com.jme3.app.Application;
 
-public class Notrium3D extends SimpleApplication {
+public class Notrium3D extends Application {
 	
-	private BulletAppState bulletAppState;
-	private MenuState menu;
-	
-	private ActorHandler actorHandler;
-	private ItemHandler itemHandler;
-	private KeyInputHandler keyInputHandler;
-	private WorldGenerator worldGenerator;
-	private AppStateManager stateManager;
-	
-	public Notrium3D() {
-		super();
+	public void initialize() {
+		super.initialize();
+		
+		MenuState menuState = new MenuState(this);
+		stateManager.attach(menuState);
 	}
 	
-	public void simpleInitApp() {
-		stateManager = this.getStateManager();
+	public void update() {
+		super.update();
 		
-		bulletAppState = new BulletAppState();
-		stateManager.attach(bulletAppState);
+		float tpf = timer.getTimePerFrame();
 		
-		//menu = new MenuState();
-		//stateManager.attach(menu);
+		stateManager.update(tpf);
+		stateManager.render(renderManager);
 		
-		keyInputHandler = new KeyInputHandler(this);
-		keyInputHandler.initKeys();
-		
-		worldGenerator = new WorldGenerator(this);
-		worldGenerator.initWorld();
-		
-		actorHandler = new ActorHandler(this);
-		actorHandler.setupActors();
-		
-		//Setup the app state manager
-		stateManager.attach(new BulletAppState());
-		
-		itemHandler = new ItemHandler(this);
-		itemHandler.init();
-		
-		WorldItem item = itemHandler.getAbstractItem("Flashlight").toWorldItem();
-		item.makeBox();
-		itemHandler.addWorldItem(item);
-	}
-	
-	public void simpleUpdate(float tpf) {
-		actorHandler.update();
+		renderManager.render(tpf);
 	}
 	
 	public static void main(String[] args) {
 		Notrium3D app = new Notrium3D();
 		app.start();
-	}
-	
-	public KeyInputHandler getKeyInputHandler() {
-		return keyInputHandler;
-	}
-	
-	public ActorHandler getActorHandler() {
-		return actorHandler;
-	}
-	
-	public ItemHandler getItemHandler(){
-		return itemHandler;
-	}
-	
-	public BulletAppState getBulletAppState(){
-		return bulletAppState;
 	}
 }
