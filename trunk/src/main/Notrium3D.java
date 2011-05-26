@@ -1,6 +1,7 @@
 package main;
 
 import states.MenuState;
+import trigger.TriggerHandler;
 
 import com.jme3.app.Application;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
@@ -10,19 +11,17 @@ import com.jme3.system.AppSettings;
 
 public class Notrium3D extends Application {
 	
-	Node guiNode = new Node("GUI Node");
-	Node rootNode = new Node("Root Node");
+	Node guiNode;
+	Node rootNode;
+	
+	TriggerHandler triggerHandler;
 	
 	public Notrium3D() {
 		super();
-	}
-	
-	public Node getGUINode() {
-		return guiNode;
-	}
-	
-	public Node getRootNode() {
-		return rootNode;
+		guiNode = new Node("GUI Node");
+		rootNode = new Node("Root Node");
+		
+		triggerHandler = new TriggerHandler(this);
 	}
 	
 	public void start() {
@@ -62,5 +61,17 @@ public class Notrium3D extends Application {
 	public static void main(String[] args) {
 		Notrium3D app = new Notrium3D();
 		app.start();
+	}
+	
+	public Node getGUINode() {
+		return guiNode;
+	}
+	
+	public Node getRootNode() {
+		return rootNode;
+	}
+	
+	public TriggerHandler getTriggerHandler() {
+		return triggerHandler;
 	}
 }
