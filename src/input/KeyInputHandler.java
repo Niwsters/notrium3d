@@ -2,6 +2,8 @@ package input;
 
 import java.util.ArrayList;
 
+import trigger.InputTrigger;
+
 import main.Notrium3D;
 
 import com.jme3.input.KeyInput;
@@ -13,8 +15,8 @@ import com.jme3.input.controls.MouseAxisTrigger;
 
 public class KeyInputHandler {
 	
-	//These lists are for adding commands through functions
-	private ArrayList<QuickKey> quickKeyList;
+	private ArrayList<InputTrigger> actionInputTriggers;
+	private ArrayList<InputTrigger> analogInputTriggers;
 	private ArrayList<String> actionList;
 	private ArrayList<String> analogList;
 	private Notrium3D game;
@@ -24,7 +26,8 @@ public class KeyInputHandler {
 	public KeyInputHandler(Notrium3D game) {
 		this.game = game;
 		
-		quickKeyList = new ArrayList<QuickKey>();
+		actionInputTriggers = new ArrayList<InputTrigger>();
+		analogInputTriggers = new ArrayList<InputTrigger>();
 		actionList = new ArrayList<String>();
 		analogList = new ArrayList<String>();
 	}
@@ -43,14 +46,19 @@ public class KeyInputHandler {
 	
     private AnalogListener analogListener = new AnalogListener() {
 		public void onAnalog(String name, float value, float tpf) {
+			for(InputTrigger t: game.getTriggerHandler().getAnalogInputTriggers()) {
+				if(name == t.getCommand()) {
+					t.check();
+				}
+			}
 		}
     };
     
     private ActionListener actionListener = new ActionListener() {
 		public void onAction(String name, boolean value, float tpf) {
-			for(QuickKey k: quickKeyList) {
-				if(k.getCommand().equals(name)) {
-					k.execute();
+			for(InputTrigger t: game.getTriggerHandler().getActionInputTriggers()) {
+				if(name == t.getCommand()) {
+					t.check();
 				}
 			}
 		}
@@ -63,6 +71,15 @@ public class KeyInputHandler {
         	game.getInputManager().addListener(analogListener, command);
     	} else {
     		game.getInputManager().addListener(actionListener, command);
+    	}
+    }
+    
+    public void addInputTrigger(InputTrigger t, boolean analog) {
+    	
+    	if(analog) {
+    		analogInputTriggers.add(t);
+    	} else {
+    		actionInputTriggers.add(t);
     	}
     }
 }

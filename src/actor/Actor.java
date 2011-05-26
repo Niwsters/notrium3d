@@ -27,6 +27,7 @@ public class Actor extends Node {
 		this.game = game;
 		
 		//This part is only for testing, will need to change later
+		//TODO: Fix the physics implementation
 		physicsCharacter = new CharacterControl(
 				new CapsuleCollisionShape(0.5f,1.8f), 0.1f);
 		this.addControl(physicsCharacter);
