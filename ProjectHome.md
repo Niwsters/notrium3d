@@ -1,0 +1,1 @@
+Based on the original game Notrium, Notrium3D is a project to "re-make" the game with a 3D-environment.
